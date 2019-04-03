@@ -1,5 +1,6 @@
 package form;
 
+import form.internal.FrameLogin;
 import misc.CellSpinner;
 import misc.ExcelExport;
 import model.ItemData;
@@ -13,8 +14,6 @@ import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
 import java.io.File;
 import java.io.IOException;
 import java.text.NumberFormat;
@@ -32,7 +31,6 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.JPasswordField;
 import javax.swing.JScrollPane;
 import javax.swing.JSpinner;
 import javax.swing.JTable;
@@ -55,7 +53,24 @@ import javax.swing.text.NumberFormatter;
 
 public class CasheerForm extends JFrame {
 
-    AboutForm aboutform = new AboutForm();
+    private final JDesktopPane theDesktop;
+    private final FrameLogin frameLogin = new FrameLogin(){
+        public void doWhenSuccess(){
+            if(frameLogin.isLogin()){
+                jBItemData.setEnabled(true);
+                jBTransaction.setEnabled(true);
+                jMILogin.setText("Logout");
+                frameLogin.dispose();
+                jBItemData.doClick();
+                jBTransaction.doClick();
+            }
+        }
+    };
+    private AboutForm aboutform = new AboutForm();
+    private ArrayList <ReceiptData> Receipt;
+    private ArrayList <UserData> User;
+    private ArrayList <ItemData> Item;
+
     /**
      */
     public CasheerForm()
@@ -68,8 +83,6 @@ public class CasheerForm extends JFrame {
 
         InstallUserData();
         InstallItemData();
-        //ItemSelectRefresh();
-
 
         setJMenuBar(MenuStrip());//?
 
@@ -80,8 +93,7 @@ public class CasheerForm extends JFrame {
         });
     }
 
-    private ArrayList <ReceiptData> Receipt;
-    private ArrayList <UserData> User;
+
 
     public void InstallUserData()
     {
@@ -91,7 +103,6 @@ public class CasheerForm extends JFrame {
         User.add(new UserData("Lockey","mantaps"));
     }
 
-    private ArrayList <ItemData> Item;
 
     public void InstallItemData()
     {
@@ -109,10 +120,7 @@ public class CasheerForm extends JFrame {
 
     }
     //////////////////////////////////////////////MenuStrip///////////////////////////////////////////////
-    private final JDesktopPane theDesktop;
 
-    private final JInternalFrame frameLogin = new JInternalFrame(
-            "Login", false, true, false, true );
     private final JInternalFrame frameTransaction = new JInternalFrame(
             "Transaction", true, true, true, true );
     private final JInternalFrame frameItemData = new JInternalFrame(
@@ -126,9 +134,8 @@ public class CasheerForm extends JFrame {
     Dimension dimin1 = new Dimension(310, 380);
     Dimension dimax1 = new Dimension(400, 400);
     public JMenuBar MenuStrip()
-    {frameLogin.add( MiniForm(), BorderLayout.CENTER ); // add panel
-        frameLogin.pack(); // set internal frame to size of contents
-
+    {
+        frameLogin.setUser(User);
         frameItemData.setSize(dimin);
         frameItemData.setMinimumSize(dimin);
         frameItemData.add( EditDataForm(), BorderLayout.CENTER ); // add panel
@@ -184,7 +191,7 @@ public class CasheerForm extends JFrame {
                 frameTransaction.dispose();
                 frameItemData.dispose();
                 framePrintReceipt.dispose();
-                jPFPass.setText("");
+                frameLogin.clearPasswordField();
 
             }
         });
@@ -246,103 +253,7 @@ public class CasheerForm extends JFrame {
         jMBMenuStrip.add(jBAbout);
         return jMBMenuStrip;
     }
-    //////////////////////////////////////////////LoginForm///////////////////////////////////////////////
-    private JTextField jTFName;
-    private JPasswordField jPFPass;
-    private JButton jBLogin;
-    private boolean Login = false;
-    public JPanel MiniForm()
-    {
 
-        JPanel jPMiniForm = new JPanel(new GridLayout(3,1,1,1));
-
-        JPanel jPName = new JPanel(new FlowLayout(FlowLayout.RIGHT));
-        JLabel jLName = new JLabel("Name :");
-        jTFName = new JTextField(20);
-        jPName.add(jLName);
-        jPName.add(jTFName);
-        jPMiniForm.add(jPName);
-
-        JPanel jPPass = new JPanel(new FlowLayout(FlowLayout.RIGHT));
-        JLabel jLPass = new JLabel("Password :");
-        jPFPass = new JPasswordField(20);
-        jPFPass.addKeyListener(new KeyAdapter()
-        {
-            @Override
-            public void keyPressed(KeyEvent evt)
-            {
-                if(evt.getKeyCode() == KeyEvent.VK_ENTER)
-                {
-                    jBLogin.doClick();
-                }
-            }
-        });
-        jPPass.add(jLPass);
-        jPPass.add(jPFPass);
-        jPMiniForm.add(jPPass);
-
-        JPanel jPLogin = new JPanel(new FlowLayout(FlowLayout.RIGHT));
-        jBLogin = new JButton("Login");
-        jBLogin.addActionListener((ActionEvent e) -> {
-            if(jTFName.getText().equals("")&&jPFPass.getText().equals(""))
-            {
-                String string = String.format("Username and password cannot empty");
-                JOptionPane.showMessageDialog(null,string,"",JOptionPane.INFORMATION_MESSAGE);
-            }
-            else if(jTFName.getText().equals(""))
-            {
-                String string = String.format("Username cannot empty");
-                JOptionPane.showMessageDialog(null,string,"",JOptionPane.INFORMATION_MESSAGE);
-            }
-            else if (jTFName.getText().substring(0, 1).matches("[0-9]"))
-            {
-                String string = String.format("Username cannot begin with number");
-                JOptionPane.showMessageDialog(null,string,"",JOptionPane.INFORMATION_MESSAGE);
-            }
-            else if (jTFName.getText().contains(" "))
-            {
-                String string = String.format("Username must not contain space");
-                JOptionPane.showMessageDialog(null,string,"",JOptionPane.INFORMATION_MESSAGE);
-            }
-            else if(jPFPass.getText().equals(""))
-            {
-                String string = String.format("Password cannot empty");
-                JOptionPane.showMessageDialog(null,string,"",JOptionPane.INFORMATION_MESSAGE);
-            }
-            else
-            {
-                for(UserData target : User)
-                {
-                    if(jTFName.getText().equals(target.getUsername())&&jPFPass.getText().equals(target.getPassword()))
-                    {
-                        jBItemData.setEnabled(true);
-                        jBTransaction.setEnabled(true);
-                        jMILogin.setText("Logout");
-                        Login = true;
-                        frameLogin.dispose();
-                        jBItemData.doClick();
-                        jBTransaction.doClick();
-                        break;
-                    }
-                    else
-                    {
-                        Login = false;
-
-                    }
-                }
-                if(!Login)
-                {
-                    String string = String.format("Username and password are incorrect");
-                    JOptionPane.showMessageDialog(null,string,"",JOptionPane.INFORMATION_MESSAGE);
-                }
-            }
-        });
-        jPLogin.add(jBLogin);
-        jPMiniForm.add(jPLogin);
-
-
-        return jPMiniForm;
-    }
     /////////////////////////////////////////TransactionForm//////////////////////////////////////////
     private JTable jTTransactionForm;
     Object[][] dataTransactionForm ;
@@ -391,11 +302,6 @@ public class CasheerForm extends JFrame {
         jTTransactionForm = new JTable(modelDataTransaction){
 
             private static final long serialVersionUID = 1L;
-
-            /*@Override
-            public Class getColumnClass(int column) {
-            return getValueAt(0, column).getClass();
-            }*/
             @Override
             public Class getColumnClass(int column) {
                 switch (column) {
@@ -631,11 +537,6 @@ public class CasheerForm extends JFrame {
                 TotalTotalPrice = Receipt.stream().map((me) -> me.getItemTotalPrice()).reduce(TotalTotalPrice, Integer::sum);
                 String TotalTotalPriceToString = String.valueOf( TotalTotalPrice);
                 jTFTotalTotalPrice.setText(TotalTotalPriceToString);
-
-                //update jTextArea
-                //jTAAboutScript.append(null);
-                //jTAAboutScript.append(LoadReceiptScript());
-
             }
         });
         jPAddDataTransaction.add(jLItemID);
@@ -1105,8 +1006,6 @@ public class CasheerForm extends JFrame {
         jPSearch.add(jTFSearch);
 
         /////////////////////////////////////////////////////////////////
-        //        jPAddData.add(jLAddData);
-        //        jLAddData.setEnabled(false);
 
         jPAddData.add(jPAddDataInput);
         jPAddData.add(jPDeleteItem);
@@ -1114,13 +1013,6 @@ public class CasheerForm extends JFrame {
         jPEditDataNorth.add(jPAddData);
         jPEditDataNorth.add(jPSearch);
 
-
-        //need authorization
-//        jLItemName.setEnabled(false);
-//        jTFItemName.setEnabled(false);
-//        jLItemPrice.setEnabled(false);
-//        jTFItemPrice.setEnabled(false);
-//        jBAddData.setEnabled(false);
         //////////////////////////
 
         jPEditDataForm.add(jPEditDataNorth, BorderLayout.NORTH);
