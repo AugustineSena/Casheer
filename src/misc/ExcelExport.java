@@ -1,4 +1,4 @@
-package sample;
+package misc;
 
 
 import java.io.BufferedWriter;
@@ -8,8 +8,8 @@ import java.io.IOException;
 import javax.swing.JTable;
 import javax.swing.table.TableModel;
 
-class ExcelExport {
-    ExcelExport() {
+public class ExcelExport {
+    public ExcelExport() {
     }
 
     public void exportTable(JTable table, File file) throws IOException {

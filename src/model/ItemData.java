@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package sample;
+package model;
 
 /**
  *
@@ -13,7 +13,10 @@ public class ItemData {
     private int ID = 0;
     private String ItemName;
     private int ItemPrice;
-   
+
+     ItemData(){
+        //
+    }
     public ItemData(int ID, String ItemName, int ItemPrice) {
         this.ID = ID;
         this.ItemName = ItemName;

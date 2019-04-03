@@ -1,4 +1,10 @@
-package sample;
+package form;
+
+import misc.CellSpinner;
+import misc.ExcelExport;
+import model.ItemData;
+import model.ReceiptData;
+import model.UserData;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -37,9 +43,6 @@ import javax.swing.SpinnerModel;
 import javax.swing.SpinnerNumberModel;
 import javax.swing.SwingConstants;
 import javax.swing.Timer;
-import javax.swing.UIManager;
-import javax.swing.UIManager.LookAndFeelInfo;
-import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import javax.swing.event.TableModelEvent;
@@ -50,13 +53,13 @@ import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
 import javax.swing.text.NumberFormatter;
 
-public class Casheer extends JFrame {
+public class CasheerForm extends JFrame {
 
     /**
      */
-    public Casheer()
+    public CasheerForm()
     {
-        super( "Casheer App Free (キャッシャー) - \u00a9 2016 - 311410001 - Augustine Sena,Inc" );
+        super( "CasheerForm App Free (キャッシャー) - \u00a9 2016 - 311410001 - Augustine Sena,Inc" );
 
         theDesktop = new JDesktopPane(); // create desktop pane
         theDesktop.setBackground(Color.BLACK);

@@ -1,9 +1,7 @@
-package sample;
+package main;
 
+import form.CasheerForm;
 import javafx.application.Application;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.stage.Stage;
 import javax.swing.*;
 import java.awt.*;
@@ -31,17 +29,17 @@ public class Main extends Application {
         }
 
 
-        Casheer casheer = new Casheer();
-        casheer.setDefaultCloseOperation( JFrame.EXIT_ON_CLOSE );
-        casheer.setSize( 600, 480 ); // set frame size
+        CasheerForm casheerForm = new CasheerForm();
+        casheerForm.setDefaultCloseOperation( JFrame.EXIT_ON_CLOSE );
+        casheerForm.setSize( 600, 480 ); // set frame size
         Dimension dim = new Dimension(600, 480);
-        casheer.setMinimumSize(dim);
-        casheer.setVisible( true ); // display frame
+        casheerForm.setMinimumSize(dim);
+        casheerForm.setVisible( true ); // display frame
 
         Dimension dimension = Toolkit.getDefaultToolkit().getScreenSize();
-        int x = (int) ((dimension.getWidth() - casheer.getWidth()) / 2);
-        int y = (int) ((dimension.getHeight() - casheer.getHeight()) / 2);
-        casheer.setLocation(x, y);
+        int x = (int) ((dimension.getWidth() - casheerForm.getWidth()) / 2);
+        int y = (int) ((dimension.getHeight() - casheerForm.getHeight()) / 2);
+        casheerForm.setLocation(x, y);
     }
 
 
