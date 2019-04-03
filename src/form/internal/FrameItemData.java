@@ -24,7 +24,6 @@ public class FrameItemData extends JInternalFrame {
     private JPanel jPEditDataForm;
     private JTextField jTFItemName;
     private JTextField jTFSearch;
-    //private JTextField jTFItemPrice;
     private Object[][] dataEditDataForm;
     private TableRowSorter<TableModel> rowSorterEditDataForm;
     private JTextField jTFItemDelete;
@@ -40,8 +39,7 @@ public class FrameItemData extends JInternalFrame {
         setItem(Item);
         reload();
     }
-    private JPanel EditDataForm()
-    {
+    private JPanel EditDataForm(){
         dataEditDataForm = new Object[getItem().size()][];
         for (int i = 0; i < getItem().size(); i++) {
             ArrayList<Object> row = new ArrayList<>() ;
@@ -218,8 +216,7 @@ public class FrameItemData extends JInternalFrame {
                     jLDeletedIndicatorItem.setVisible(true);
                     ///recount ID of Item
                     int count=1;
-                    for (ItemData me: getItem())
-                    {
+                    for (ItemData me: getItem()){
                         me.setID(count);
                         count++;
                     }
