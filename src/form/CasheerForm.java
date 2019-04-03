@@ -55,6 +55,7 @@ import javax.swing.text.NumberFormatter;
 
 public class CasheerForm extends JFrame {
 
+    AboutForm aboutform = new AboutForm();
     /**
      */
     public CasheerForm()
@@ -240,7 +241,7 @@ public class CasheerForm extends JFrame {
         jMBMenuStrip.add(jBItemData);
         JButton jBAbout = new JButton("About");
         jBAbout.addActionListener((ActionEvent event) -> {
-            AboutForm aboutform = new AboutForm();
+           aboutform.show();
         });
         jMBMenuStrip.add(jBAbout);
         return jMBMenuStrip;
