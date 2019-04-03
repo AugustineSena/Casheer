@@ -27,15 +27,13 @@ public class Main extends Application {
                 // not worth my time
             }
         }
-
-
         CasheerForm casheerForm = new CasheerForm();
         casheerForm.setDefaultCloseOperation( JFrame.EXIT_ON_CLOSE );
         casheerForm.setSize( 600, 480 ); // set frame size
         Dimension dim = new Dimension(600, 480);
         casheerForm.setMinimumSize(dim);
         casheerForm.setVisible( true ); // display frame
-
+        //start window on the center of the screen
         Dimension dimension = Toolkit.getDefaultToolkit().getScreenSize();
         int x = (int) ((dimension.getWidth() - casheerForm.getWidth()) / 2);
         int y = (int) ((dimension.getHeight() - casheerForm.getHeight()) / 2);

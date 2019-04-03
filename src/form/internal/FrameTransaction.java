@@ -4,7 +4,6 @@ import misc.CellSpinner;
 import misc.ExcelExport;
 import model.ItemData;
 import model.ReceiptData;
-
 import javax.swing.*;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
