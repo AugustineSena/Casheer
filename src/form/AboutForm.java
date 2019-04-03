@@ -17,8 +17,7 @@ import javax.swing.JTextArea;
 public class AboutForm {
     private JTextArea jTAAboutScript;
     private Box box;  
-    public  AboutForm()
-    {
+    public  AboutForm(){
      box = Box.createHorizontalBox();
      String script = 
  " Copyright (c) 2014, 2016 Augustine Sena,Inc (アウグスティヌスセナ、株式会社) \n"+

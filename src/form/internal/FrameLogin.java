@@ -27,9 +27,7 @@ public class FrameLogin extends JInternalFrame  {
         this.pack();
     }
 
-    private JPanel MiniForm()
-    {
-
+    private JPanel MiniForm(){
         JPanel jPMiniForm = new JPanel(new GridLayout(3,1,1,1));
 
         JPanel jPName = new JPanel(new FlowLayout(FlowLayout.RIGHT));
@@ -47,8 +45,7 @@ public class FrameLogin extends JInternalFrame  {
             @Override
             public void keyPressed(KeyEvent evt)
             {
-                if(evt.getKeyCode() == KeyEvent.VK_ENTER)
-                {
+                if(evt.getKeyCode() == KeyEvent.VK_ENTER){
                     jBLogin.doClick();
                 }
             }
@@ -60,48 +57,31 @@ public class FrameLogin extends JInternalFrame  {
         JPanel jPLogin = new JPanel(new FlowLayout(FlowLayout.RIGHT));
         jBLogin = new JButton("Login");
         jBLogin.addActionListener((ActionEvent e) -> {
-            if(jTFName.getText().equals("")&&jPFPass.getText().equals(""))
-            {
+            if(jTFName.getText().equals("")&&jPFPass.getText().equals("")){
                 String string = String.format("Username and password cannot empty");
                 JOptionPane.showMessageDialog(null,string,"",JOptionPane.INFORMATION_MESSAGE);
-            }
-            else if(jTFName.getText().equals(""))
-            {
+            }else if(jTFName.getText().equals("")){
                 String string = String.format("Username cannot empty");
                 JOptionPane.showMessageDialog(null,string,"",JOptionPane.INFORMATION_MESSAGE);
-            }
-            else if (jTFName.getText().substring(0, 1).matches("[0-9]"))
-            {
+            }else if (jTFName.getText().substring(0, 1).matches("[0-9]")){
                 String string = String.format("Username cannot begin with number");
                 JOptionPane.showMessageDialog(null,string,"",JOptionPane.INFORMATION_MESSAGE);
-            }
-            else if (jTFName.getText().contains(" "))
-            {
+            }else if (jTFName.getText().contains(" ")){
                 String string = String.format("Username must not contain space");
                 JOptionPane.showMessageDialog(null,string,"",JOptionPane.INFORMATION_MESSAGE);
-            }
-            else if(jPFPass.getText().equals(""))
-            {
+            }else if(jPFPass.getText().equals("")){
                 String string = String.format("Password cannot empty");
                 JOptionPane.showMessageDialog(null,string,"",JOptionPane.INFORMATION_MESSAGE);
-            }
-            else
-            {
-                for(UserData target : getUser())
-                {
-                    if(jTFName.getText().equals(target.getUsername())&&jPFPass.getText().equals(target.getPassword()))
-                    {
+            }else{
+                for(UserData target : getUser()){
+                    if(jTFName.getText().equals(target.getUsername())&&jPFPass.getText().equals(target.getPassword())){
                         Login = true;
                         break;
-                    }
-                    else
-                    {
+                    }else{
                         Login = false;
-
                     }
                 }
-                if(!isLogin())
-                {
+                if(!isLogin()){
                     String string = String.format("Username and password are incorrect");
                     JOptionPane.showMessageDialog(null,string,"",JOptionPane.INFORMATION_MESSAGE);
                 }
@@ -114,32 +94,29 @@ public class FrameLogin extends JInternalFrame  {
         jPMiniForm.add(jPLogin);
         return jPMiniForm;
     }
-
     public ArrayList<UserData> getUser() {
         return User;
     }
-
     public void setUser(ArrayList<UserData> user) {
         User = user;
     }
-
     public boolean isLogin() {
         return Login;
     }
     public JButton getLoginButton(){
         return jBLogin;
     }
-     public void clearPasswordField(){
+    public void clearPasswordField(){
         jPFPass.setText("");
-     }
-     public void clearUsernameField(){
+    }
+    public void clearUsernameField(){
         jTFName.setText("");
-     }
-     public void clearField(){
+    }
+    public void clearField(){
         clearPasswordField();
         clearUsernameField();
-     }
-     public void doWhenSuccess(){
+    }
+    public void doWhenSuccess(){
 
     }
 }

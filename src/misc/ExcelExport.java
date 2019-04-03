@@ -11,26 +11,21 @@ import javax.swing.table.TableModel;
 public class ExcelExport {
     public ExcelExport() {
     }
-
     public void exportTable(JTable table, File file) throws IOException {
         TableModel model = table.getModel();
         FileWriter out = new FileWriter(file);
         BufferedWriter bw = new BufferedWriter(out);
         Throwable var6 = null;
-
         try {
             int i;
             for(i = 0; i < model.getColumnCount(); ++i) {
                 bw.write(model.getColumnName(i) + "\t");
             }
-
             bw.write("\n");
-
             for(i = 0; i < model.getRowCount(); ++i) {
                 for(int j = 0; j < model.getColumnCount(); ++j) {
                     bw.write(model.getValueAt(i, j).toString() + "\t");
                 }
-
                 bw.write("\n");
             }
         } catch (Throwable var16) {
@@ -48,9 +43,7 @@ public class ExcelExport {
                     bw.close();
                 }
             }
-
         }
-
-        System.out.print("Write out to" + file);
+        System.out.println("Write out to" + file);
     }
 }

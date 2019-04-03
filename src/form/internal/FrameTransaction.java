@@ -55,18 +55,16 @@ public class FrameTransaction extends JInternalFrame {
     }
     private JPanel TransactionForm()
     {
-        Receipt = new ArrayList<>();
-        dataTransactionForm = new Object [Receipt.size()][];
+        setReceipt(new ArrayList<>());
+        dataTransactionForm = new Object [getReceipt().size()][];
         JPanel jPTransactionNorth = new JPanel(new GridLayout(2, 1,1,1));
         JPanel jPBNewTransaction = new JPanel(new FlowLayout(FlowLayout.RIGHT));
         JButton jBNewTransaction = new JButton("New Transaction");
         jBNewTransaction.addActionListener((ActionEvent e) -> {
-            if(!Receipt.isEmpty())
-            {
-                Receipt.clear();
+            if(!getReceipt().isEmpty()){
+                getReceipt().clear();
             }
-            if(modelDataTransaction.getRowCount()!=0)
-            {
+            if(modelDataTransaction.getRowCount()!=0){
                 jTTransactionForm.removeAll();
                 int rowCount = modelDataTransaction.getRowCount();
                 //Remove rows one by one from the end of the table
@@ -74,26 +72,21 @@ public class FrameTransaction extends JInternalFrame {
                     modelDataTransaction.removeRow(i);
                 }
             }
-
             jTFTransactionID.setText("");
             jSTransactionQty.setValue((int)1);
             jTFTransactionDelete.setText("");
             jTFTotalTotalPrice.setText("0");
-
-
         });
         jPBNewTransaction.add(jBNewTransaction);
 
         jPTransactionNorth.add(jPBNewTransaction);
         jPTransactionNorth.add(DataTransaction());
 
-
         String[] headers = {"No.","ID","Item Name","Item Price","Item Qty.","Total/item"};
         JPanel frame = new JPanel(new GridLayout(3, 1, 1, 1));
         modelDataTransaction = new DefaultTableModel(dataTransactionForm,headers);
 
         jTTransactionForm = new JTable(modelDataTransaction){
-
             private static final long serialVersionUID = 1L;
             @Override
             public Class getColumnClass(int column) {
@@ -118,11 +111,8 @@ public class FrameTransaction extends JInternalFrame {
             public boolean isCellEditable (int row, int column)
             {
                 return column ==4;
-                //return true;
             }
-
         };
-
         TableColumnModel tcm = jTTransactionForm.getColumnModel();
         jTTransactionForm.setRowHeight(30);
         TableColumn tc = tcm.getColumn(4);
@@ -137,14 +127,12 @@ public class FrameTransaction extends JInternalFrame {
                         column));
 
                 if (column == 4) {
-
                     Object ItemID = jTTransactionForm.getModel().getValueAt(row, 1) ;
                     int getItemID = (int)ItemID;
                     System.err.println("Patch ItemID :"+ ItemID+" ...");
-                    Receipt.stream().filter((me) -> (getItemID==me.getID())).forEach((me) -> {
+                    getReceipt().stream().filter((me) -> (getItemID==me.getID())).forEach((me) -> {
                         me.setItemQuantity((int)jTTransactionForm.getModel().getValueAt(row,column));
                     });
-
                     /////refreshing table///////////////
                     int rowCount = modelDataTransaction.getRowCount();
                     //Remove rows one by one from the end of the table
@@ -153,21 +141,19 @@ public class FrameTransaction extends JInternalFrame {
                     }
                     /////reload table
                     int count1 = 1;
-                    for (int i = 0; i < Receipt.size(); i++) {
-
+                    for (int i = 0; i < getReceipt().size(); i++) {
                         ArrayList<Object> row1 = new ArrayList<>() ;
                         row1.add(count1);
-                        row1.add(Receipt.get(i).getID());
-                        row1.add(Receipt.get(i).getItemName());
-                        row1.add(Receipt.get(i).getItemPrice());
-                        row1.add(Receipt.get(i).getItemQuantity());
-                        row1.add(Receipt.get(i).getItemTotalPrice());
+                        row1.add(getReceipt().get(i).getID());
+                        row1.add(getReceipt().get(i).getItemName());
+                        row1.add(getReceipt().get(i).getItemPrice());
+                        row1.add(getReceipt().get(i).getItemQuantity());
+                        row1.add(getReceipt().get(i).getItemTotalPrice());
                         modelDataTransaction.addRow(row1.toArray(new Object[row1.size()]));
                         count1++;
                     }
-
                     int TotalTotalPrice = 0;
-                    TotalTotalPrice = Receipt.stream().map((me) -> me.getItemTotalPrice()).reduce(TotalTotalPrice, Integer::sum);
+                    TotalTotalPrice = getReceipt().stream().map((me) -> me.getItemTotalPrice()).reduce(TotalTotalPrice, Integer::sum);
                     String TotalTotalPriceToString = String.valueOf( TotalTotalPrice);
                     jTFTotalTotalPrice.setText(TotalTotalPriceToString);
                 }
@@ -184,7 +170,7 @@ public class FrameTransaction extends JInternalFrame {
         JPanel jPTransactionSouth = new JPanel(new GridLayout(2,1,1,1));
 
         int TotalTotalPrice = 0;
-        TotalTotalPrice = Receipt.stream().map((me) -> me.getItemTotalPrice()).reduce(TotalTotalPrice, Integer::sum);
+        TotalTotalPrice = getReceipt().stream().map((me) -> me.getItemTotalPrice()).reduce(TotalTotalPrice, Integer::sum);
 
         JPanel jPTotalTotalPrice = new JPanel(new FlowLayout(FlowLayout.RIGHT));
         JLabel jLTotalTotalPrice = new JLabel("Total :");
@@ -210,7 +196,7 @@ public class FrameTransaction extends JInternalFrame {
         JButton jBPrint = new JButton("Print Preview");
         jBPrint.addActionListener((ActionEvent e) -> {
             try{
-
+                framePrintReceipt.setReceipt(getReceipt());
                 getParentDesktop().add( framePrintReceipt ); // attach internal frame
                 // show internal frame
                 Dimension desktopSize = getParentDesktop().getSize();
@@ -218,7 +204,6 @@ public class FrameTransaction extends JInternalFrame {
                 framePrintReceipt.setLocation((desktopSize.width - jInternalFrameSize.width)/2,
                         (desktopSize.height - jInternalFrameSize.height)/2);
                 framePrintReceipt.setVisible( true );
-
                 //update jTextArea
                 framePrintReceipt.update("","",null);
 
@@ -236,19 +221,15 @@ public class FrameTransaction extends JInternalFrame {
         jPTransactionSouth.add(jPTotalTotalPrice);
         jPTransactionSouth.add(jPButtonExport);
 
-        frame.add(jPTransactionNorth/*,BorderLayout.NORTH*/);
-        frame.add(scroll/*, BorderLayout.CENTER*/);
-        frame.add(jPTransactionSouth/*, BorderLayout.SOUTH*/);
+        frame.add(jPTransactionNorth);
+        frame.add(scroll);
+        frame.add(jPTransactionSouth);
         frame.setVisible(true);
         return frame;
     }
-
-
     ////////////////////////////////////////DataTransactionEdit////////////////////////////////////////
-    private JPanel DataTransaction()
-    {
+    private JPanel DataTransaction(){
         JPanel jPDataTransactionEdit = new JPanel(new GridLayout(2,1,2,2));
-
         JPanel jPAddDataTransaction = new JPanel(new FlowLayout(FlowLayout.RIGHT));
         JLabel jLItemID = new JLabel("Item ID :");
         jTFTransactionID = new JTextField(5);
@@ -257,69 +238,48 @@ public class FrameTransaction extends JInternalFrame {
         jSTransactionQty = new JSpinner(spinnerModel);
         JButton jBAddDataTransaction = new JButton("Add Transaction");
         jBAddDataTransaction.addActionListener((ActionEvent e) -> {
-            if (jTFTransactionID.getText().equals(""))
-            {
+            if (jTFTransactionID.getText().equals("")){
                 String string = String.format("Item ID cannot empty");
                 JOptionPane.showMessageDialog(null,string,"",JOptionPane.INFORMATION_MESSAGE);
-            }
-            else if (jTFTransactionID.getText().contains(" "))
-            {
+            }else if (jTFTransactionID.getText().contains(" ")){
                 String string = String.format("Item ID cannot contain space");
                 JOptionPane.showMessageDialog(null,string,"",JOptionPane.INFORMATION_MESSAGE);
-            }
-            else if (!jTFTransactionID.getText().matches("[0-9]*"))
-            {
+            }else if (!jTFTransactionID.getText().matches("[0-9]*")){
                 String string = String.format("Item ID must only contain number");
                 JOptionPane.showMessageDialog(null,string,"",JOptionPane.INFORMATION_MESSAGE);
-            }
-
-            else
-            { int TID = Integer.parseInt(jTFTransactionID.getText());
+            }else{
+                int TID = Integer.parseInt(jTFTransactionID.getText());
                 boolean isntRedundant=true;
-                for(ReceiptData tar:Receipt)
-                {
+                for(ReceiptData tar: getReceipt()){
                     isntRedundant = TID != tar.getID();
                 }
-                if(TID> getItem().size()||TID<1)
-                {
+                if(TID> getItem().size()||TID<1){
                     String string = String.format("Item ID not found");
                     JOptionPane.showMessageDialog(null,string,"",JOptionPane.INFORMATION_MESSAGE);
-                }
-                else if(!isntRedundant)
-                {
+                }else if(!isntRedundant){
                     String string = String.format("Item already added");
                     JOptionPane.showMessageDialog(null,string,"",JOptionPane.INFORMATION_MESSAGE);
-                }
-                else
-                {
+                }else{
                     getItem().stream().filter((im) -> (TID == im.getID())).forEach((im) -> {
-                        Receipt.add(new ReceiptData(im.getID(),im.getItemName(),im.getItemPrice(),(int) jSTransactionQty.getValue()));
+                        getReceipt().add(new ReceiptData(im.getID(),im.getItemName(),im.getItemPrice(),(int) jSTransactionQty.getValue()));
                     });
-
                     System.out.format("%3s%3s%30s%12s%10s%12s\n","No.","ID","Item Name","Item Price","Item Qty.","Total/item");
                     int j=1;
-                    for(ReceiptData me: Receipt) {
+                    for(ReceiptData me: getReceipt()) {
                         System.out.format("%3d%3s%30s%12s%10s%12s\n",j, me.getID(),me.getItemName(),me.getItemPrice(),me.getItemQuantity(),me.getItemTotalPrice());j++;
                     }
-
-
                     ArrayList<Object> row = new ArrayList<>() ;
-
-
-
-                    row.add(Receipt.size());
-                    row.add(Receipt.get(Receipt.size()-1).getID());
-                    row.add(Receipt.get(Receipt.size()-1).getItemName());
-                    row.add(Receipt.get(Receipt.size()-1).getItemPrice());
-                    row.add(Receipt.get(Receipt.size()-1).getItemQuantity());
-                    row.add(Receipt.get(Receipt.size()-1).getItemTotalPrice());
+                    row.add(getReceipt().size());
+                    row.add(getReceipt().get(getReceipt().size()-1).getID());
+                    row.add(getReceipt().get(getReceipt().size()-1).getItemName());
+                    row.add(getReceipt().get(getReceipt().size()-1).getItemPrice());
+                    row.add(getReceipt().get(getReceipt().size()-1).getItemQuantity());
+                    row.add(getReceipt().get(getReceipt().size()-1).getItemTotalPrice());
                     modelDataTransaction.addRow(row.toArray(new Object[row.size()]));
-
-
                     row.clear();
                 }
                 int TotalTotalPrice = 0;
-                TotalTotalPrice = Receipt.stream().map((me) -> me.getItemTotalPrice()).reduce(TotalTotalPrice, Integer::sum);
+                TotalTotalPrice = getReceipt().stream().map((me) -> me.getItemTotalPrice()).reduce(TotalTotalPrice, Integer::sum);
                 String TotalTotalPriceToString = String.valueOf( TotalTotalPrice);
                 jTFTotalTotalPrice.setText(TotalTotalPriceToString);
             }
@@ -349,7 +309,6 @@ public class FrameTransaction extends JInternalFrame {
                     rowSorterTransactionForm.setRowFilter(RowFilter.regexFilter("(?i)" + text,1));
                 }
             }
-
             @Override
             public void removeUpdate(DocumentEvent e) {
                 String text = jTFTransactionDelete.getText();
@@ -360,44 +319,29 @@ public class FrameTransaction extends JInternalFrame {
                     rowSorterTransactionForm.setRowFilter(RowFilter.regexFilter("(?i)" + text,1));
                 }
             }
-
             @Override
             public void changedUpdate(DocumentEvent e) {
                 throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
             }
-
         });
-
-
         JButton jBDelete = new JButton("Delete");
         jBDelete.addActionListener((ActionEvent e) -> {
-            if (jTFTransactionDelete.getText().equals(""))
-            {
+            if (jTFTransactionDelete.getText().equals("")){
                 String string = String.format("Item ID cannot empty");
                 JOptionPane.showMessageDialog(null,string,"",JOptionPane.INFORMATION_MESSAGE);
-            }
-            else if (jTFTransactionDelete.getText().contains(" "))
-            {
+            }else if (jTFTransactionDelete.getText().contains(" ")){
                 String string = String.format("Item ID cannot contain space");
                 JOptionPane.showMessageDialog(null,string,"",JOptionPane.INFORMATION_MESSAGE);
-            }
-            else if (!jTFTransactionDelete.getText().matches("[0-9]*"))
-            {
+            }else if (!jTFTransactionDelete.getText().matches("[0-9]*")){
                 String string = String.format("Item ID must only contain number");
                 JOptionPane.showMessageDialog(null,string,"",JOptionPane.INFORMATION_MESSAGE);
-            }
-
-            else
-            { int DID = Integer.parseInt(jTFTransactionDelete.getText());
-
-                if(DID> getItem().size()||DID<1)
-                {
+            }else{
+                int DID = Integer.parseInt(jTFTransactionDelete.getText());
+                if(DID> getItem().size()||DID<1){
                     String string = String.format("Item ID invalid");
                     JOptionPane.showMessageDialog(null,string,"",JOptionPane.INFORMATION_MESSAGE);
-                }
-                else /*if(  rowSorterTransactionForm.getRowFilter() != null)*/
-                {
-                    Iterator<ReceiptData> iter = Receipt.iterator();
+                }else{
+                    Iterator<ReceiptData> iter = getReceipt().iterator();
                     while(iter.hasNext()) {
                         ReceiptData rDIter = iter.next();
                         if(rDIter.getID()==DID) {
@@ -405,7 +349,6 @@ public class FrameTransaction extends JInternalFrame {
                         }
                     }
                     jLDeletedIndicator.setVisible(true);
-
                     /////refreshing table///////////////
                     int rowCount = modelDataTransaction.getRowCount();
                     //Remove rows one by one from the end of the table
@@ -414,32 +357,27 @@ public class FrameTransaction extends JInternalFrame {
                     }
                     /////reload table
                     int count1 = 1;
-                    for (int i = 0; i < Receipt.size(); i++) {
-
+                    for (int i = 0; i < getReceipt().size(); i++) {
                         ArrayList<Object> row = new ArrayList<>() ;
                         row.add(count1);
-                        row.add(Receipt.get(i).getID());
-                        row.add(Receipt.get(i).getItemName());
-                        row.add(Receipt.get(i).getItemPrice());
-                        row.add(Receipt.get(i).getItemQuantity());
-                        row.add(Receipt.get(i).getItemTotalPrice());
+                        row.add(getReceipt().get(i).getID());
+                        row.add(getReceipt().get(i).getItemName());
+                        row.add(getReceipt().get(i).getItemPrice());
+                        row.add(getReceipt().get(i).getItemQuantity());
+                        row.add(getReceipt().get(i).getItemTotalPrice());
                         modelDataTransaction.addRow(row.toArray(new Object[row.size()]));
                         count1++;
                     }
-
                     ///recount total price
                     int TotalTotalPrice = 0;
-                    TotalTotalPrice = Receipt.stream().map((reme) -> reme.getItemTotalPrice()).reduce(TotalTotalPrice, Integer::sum);
+                    TotalTotalPrice = getReceipt().stream().map((reme) -> reme.getItemTotalPrice()).reduce(TotalTotalPrice, Integer::sum);
                     String TotalTotalPriceToString = String.valueOf( TotalTotalPrice);
                     jTFTotalTotalPrice.setText(TotalTotalPriceToString);
-
 
                     jTFTransactionDelete.setText("");//restore session
                     jTFTransactionID.setText("");
                     ShowDeletedIndicator();
                 }
-
-
             }
         });
         jPDeleteDataTransaction.add(jLDeletedIndicator);
@@ -450,34 +388,31 @@ public class FrameTransaction extends JInternalFrame {
         jPDataTransactionEdit.add(jPAddDataTransaction);
         jPDataTransactionEdit.add(jPDeleteDataTransaction);
         return jPDataTransactionEdit;
-
     }
-    public void ShowDeletedIndicator()
-    {
+    public void ShowDeletedIndicator(){
         int delay = 1500; //milliseconds
         ActionListener taskPerformer = (ActionEvent evt) -> {
-
             jLDeletedIndicator.setVisible(false);
-
         };
         new Timer(delay, taskPerformer).start();
-
     }
-
     public JDesktopPane getParentDesktop() {
         return parentDesktop;
     }
-
     public void setParentDesktop(JDesktopPane parentDesktop) {
         this.parentDesktop = parentDesktop;
     }
-
     public ArrayList<ItemData> getItem() {
         return Item;
     }
-
     public void setItem(ArrayList<ItemData> item) {
         Item = item;
+    }
+    public ArrayList<ReceiptData> getReceipt() {
+        return Receipt;
+    }
+    public void setReceipt(ArrayList<ReceiptData> receipt) {
+        Receipt = receipt;
     }
 }
 

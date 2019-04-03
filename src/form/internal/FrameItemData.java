@@ -34,25 +34,21 @@ public class FrameItemData extends JInternalFrame {
     private ArrayList <ItemData> Item = new ArrayList<>();
     public FrameItemData(){
         super("Item Data", true, true, true, true );
-        this.add( EditDataForm(), BorderLayout.CENTER ); // add panel
-        this.pack(); // set internal frame to size of contents
+        reload();
     }
     public FrameItemData(ArrayList<ItemData> Item){
         super("Item Data", true, true, true, true );
         setItem(Item);
-        this.add( EditDataForm(), BorderLayout.CENTER ); // add panel
-        this.pack(); // set internal frame to size of contents
+        reload();
     }
     private JPanel EditDataForm()
     {
         dataEditDataForm = new Object[getItem().size()][];
         for (int i = 0; i < getItem().size(); i++) {
-
             ArrayList<Object> row = new ArrayList<>() ;
             row.add(getItem().get(i).getID());
             row.add(getItem().get(i).getItemName());
             row.add(getItem().get(i).getItemPrice());
-            // row.add(ItemSelect.get(i));
             dataEditDataForm[i] = row.toArray(new Object[row.size()]);
 
         }
@@ -61,13 +57,7 @@ public class FrameItemData extends JInternalFrame {
 
         modelEditData = new DefaultTableModel(dataEditDataForm,headers);
         jTEditDataForm = new JTable(modelEditData){
-
             private static final long serialVersionUID = 1L;
-
-            /*@Override
-            public Class getColumnClass(int column) {
-            return getValueAt(0, column).getClass();
-            }*/
             @Override
             public Class getColumnClass(int column) {
                 switch (column) {
@@ -77,24 +67,13 @@ public class FrameItemData extends JInternalFrame {
                         return String.class;
                     case 2:
                         return Integer.class;
-                   /* case 3:
-                        return Boolean.class;*/
                     default:
                         return Boolean.class;
                 }
-
             }
             @Override
-            public boolean isCellEditable (int row, int column)
-            {
+            public boolean isCellEditable (int row, int column){
                 return false;
-                //return column==2;
-                /*   if (column == 0) {
-                    return false;
-                 }  else {
-                    return true;
-                 }
-             */
             }
         };
         jTEditDataForm.setPreferredScrollableViewportSize(new Dimension(450,123));
@@ -111,8 +90,7 @@ public class FrameItemData extends JInternalFrame {
             try{
                 ExcelExport exp = new ExcelExport();
                 exp.exportTable(jTEditDataForm, new File("D:ItemList.xls"));
-            }
-            catch(IOException e){
+            }catch(IOException e){
                 e.getMessage();
             }
         });
@@ -121,7 +99,6 @@ public class FrameItemData extends JInternalFrame {
         JPanel jPEditDataNorth = new JPanel(new GridLayout(2,1,1,1));
         JPanel jPAddData = new JPanel(new GridLayout(2, 1,1,1));
 
-        //JLabel jLAddData = new JLabel("Add New Data",SwingConstants.CENTER );
         JPanel jPAddDataInput = new JPanel(new FlowLayout(FlowLayout.RIGHT));
         JLabel jLItemName = new JLabel("Item Name :");
         jTFItemName = new JTextField(12);
@@ -136,45 +113,29 @@ public class FrameItemData extends JInternalFrame {
         // If you want the value to be committed on each keystroke instead of focus lost
         formatter.setCommitsOnValidEdit(true);
         JFormattedTextField jTFItemPrice = new JFormattedTextField(formatter);//http://bugs.java.com/bugdatabase/view_bug.do?bug_id=4832257
-        //jTFItemPrice.setValue(null);//?
-        //jTFItemPrice.setFocusLostBehavior(JFormattedTextField.PERSIST);
         jTFItemPrice.setColumns(12);
         JButton jBAddData = new JButton("Add");
         jBAddData.addActionListener((ActionEvent e) -> {
-            if(jTFItemName.getText().equals("")&&jTFItemPrice.getText().equals(""))
-            {
+            if(jTFItemName.getText().equals("")&&jTFItemPrice.getText().equals("")){
                 String string = String.format("Item name and price cannot empty");
                 JOptionPane.showMessageDialog(null,string,"",JOptionPane.INFORMATION_MESSAGE);
-            }
-            else if(jTFItemName.getText().equals(""))
-            {
+            }else if(jTFItemName.getText().equals("")){
                 String string = String.format("Item name cannot empty");
                 JOptionPane.showMessageDialog(null,string,"",JOptionPane.INFORMATION_MESSAGE);
-            }
-            else if (jTFItemPrice.getText().equals(""))
-            {
+            }else if (jTFItemPrice.getText().equals("")){
                 String string = String.format("Item price cannot empty");
                 JOptionPane.showMessageDialog(null,string,"",JOptionPane.INFORMATION_MESSAGE);
-            }
-            else if (jTFItemPrice.getText().contains(" "))
-            {
+            }else if (jTFItemPrice.getText().contains(" ")){
                 String string = String.format("Item price cannot contain space");
                 JOptionPane.showMessageDialog(null,string,"",JOptionPane.INFORMATION_MESSAGE);
-            }
-
-            else
-            {
+            }else{
                 boolean isntRedundant=true;
-                for(ItemData tar: getItem())
-                {
+                for(ItemData tar: getItem()){
                     isntRedundant = !jTFItemName.getText().equals(tar.getItemName());
-                }
-                if(!isntRedundant)
-                {
+                }if(!isntRedundant){
                     String string = String.format("Item already added !");
                     JOptionPane.showMessageDialog(null,string,"",JOptionPane.INFORMATION_MESSAGE);
-                }
-                else{
+                }else{
                     getItem().add(new ItemData(getItem().size()+1,jTFItemName.getText(), (int)jTFItemPrice.getValue()));
                     String string = String.format("Data successfully added !");
                     JOptionPane.showMessageDialog(null,string,"",JOptionPane.INFORMATION_MESSAGE);
@@ -194,7 +155,6 @@ public class FrameItemData extends JInternalFrame {
                 }
             }
         });
-
         jPAddDataInput.add(jLItemName);
         jPAddDataInput.add(jTFItemName);
         jPAddDataInput.add(jLItemPrice);
@@ -209,65 +169,46 @@ public class FrameItemData extends JInternalFrame {
         jTFItemDelete = new JTextField(5);
         jTFItemDelete.setHorizontalAlignment(SwingConstants.RIGHT);
         jTFItemDelete.getDocument().addDocumentListener(new DocumentListener(){
-
             @Override
             public void insertUpdate(DocumentEvent e) {
                 String text = jTFItemDelete.getText();
-
                 if (text.trim().length() == 0) {
                     rowSorterEditDataForm.setRowFilter(null);
                 } else {
                     rowSorterEditDataForm.setRowFilter(RowFilter.regexFilter("(?i)" + text,0));
                 }
             }
-
             @Override
             public void removeUpdate(DocumentEvent e) {
                 String text = jTFItemDelete.getText();
-
                 if (text.trim().length() == 0) {
                     rowSorterEditDataForm.setRowFilter(null);
                 } else {
                     rowSorterEditDataForm.setRowFilter(RowFilter.regexFilter("(?i)" + text,0));
                 }
             }
-
             @Override
             public void changedUpdate(DocumentEvent e) {
                 throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
             }
-
         });
-
-
         JButton jBDelete = new JButton("Delete");
         jBDelete.addActionListener((ActionEvent e) -> {
-            if (jTFItemDelete.getText().equals(""))
-            {
+            if (jTFItemDelete.getText().equals("")){
                 String string = String.format("Item ID cannot empty");
                 JOptionPane.showMessageDialog(null,string,"",JOptionPane.INFORMATION_MESSAGE);
-            }
-            else if (jTFItemDelete.getText().contains(" "))
-            {
+            }else if (jTFItemDelete.getText().contains(" ")){
                 String string = String.format("Item ID cannot contain space");
                 JOptionPane.showMessageDialog(null,string,"",JOptionPane.INFORMATION_MESSAGE);
-            }
-            else if (!jTFItemDelete.getText().matches("[0-9]*"))
-            {
+            }else if (!jTFItemDelete.getText().matches("[0-9]*")){
                 String string = String.format("Item ID must only contain number");
                 JOptionPane.showMessageDialog(null,string,"",JOptionPane.INFORMATION_MESSAGE);
-            }
-
-            else
-            { int DID = Integer.parseInt(jTFItemDelete.getText());
-
-                if(DID> getItem().size()||DID<1)
-                {
+            }else{
+                int DID = Integer.parseInt(jTFItemDelete.getText());
+                if(DID> getItem().size()||DID<1){
                     String string = String.format("Item ID invalid");
                     JOptionPane.showMessageDialog(null,string,"",JOptionPane.INFORMATION_MESSAGE);
-                }
-                else /*if(  rowSorterTransactionForm.getRowFilter() != null)*/
-                {
+                }else{
                     Iterator<ItemData> iter = getItem().iterator();
                     while(iter.hasNext()) {
                         ItemData rDIter = iter.next();
@@ -276,7 +217,6 @@ public class FrameItemData extends JInternalFrame {
                         }
                     }
                     jLDeletedIndicatorItem.setVisible(true);
-
                     ///recount ID of Item
                     int count=1;
                     for (ItemData me: getItem())
@@ -284,7 +224,6 @@ public class FrameItemData extends JInternalFrame {
                         me.setID(count);
                         count++;
                     }
-
                     /////refreshing table///////////////
                     int rowCount = modelEditData.getRowCount();
                     //Remove rows one by one from the end of the table
@@ -292,9 +231,7 @@ public class FrameItemData extends JInternalFrame {
                         modelEditData.removeRow(i);
                     }
                     /////reload table
-
                     for (int i = 0; i < getItem().size(); i++) {
-
                         ArrayList<Object> row = new ArrayList<>() ;
 
                         row.add(getItem().get(i).getID());
@@ -304,14 +241,9 @@ public class FrameItemData extends JInternalFrame {
                         modelEditData.addRow(row.toArray(new Object[row.size()]));
 
                     }
-
-
-
                     jTFItemDelete.setText("");//restore session
                     ShowDeletedIndicatorItem();
                 }
-
-
             }
         });
         jPDeleteItem.add(jLDeletedIndicatorItem);
@@ -322,13 +254,11 @@ public class FrameItemData extends JInternalFrame {
         ///////////////////Search///////////////////
         JPanel jPSearch = new JPanel(new FlowLayout(FlowLayout.RIGHT));
         jTFSearch = new JTextField(12);
-
         jTFSearch.getDocument().addDocumentListener(
                 new DocumentListener() {
                     @Override
                     public void insertUpdate(DocumentEvent el) {
                         String text = jTFSearch.getText();
-
                         if (text.trim().length() == 0) {
                             rowSorterEditDataForm.setRowFilter(null);
                         } else {
@@ -336,18 +266,15 @@ public class FrameItemData extends JInternalFrame {
                             rowSorterEditDataForm.setRowFilter(javax.swing.RowFilter.regexFilter("(?i)" +query) );
                         }
                     }
-
                     @Override
                     public void removeUpdate(DocumentEvent el) {
                         String query = jTFSearch.getText();
-
                         if (query.trim().length() == 0) {
                             rowSorterEditDataForm.setRowFilter(null);
                         } else {
                             rowSorterEditDataForm.setRowFilter(javax.swing.RowFilter.regexFilter("(?i)" + query));
                         }
                     }
-
                     @Override
                     public void changedUpdate(DocumentEvent el) {
                         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
@@ -374,23 +301,26 @@ public class FrameItemData extends JInternalFrame {
         jPEditDataForm.setVisible(true);
         return jPEditDataForm;
     }
-    private void ShowDeletedIndicatorItem()
-    {
+    private void ShowDeletedIndicatorItem() {
         int delay = 1500; //milliseconds
         ActionListener taskPerformer = (ActionEvent evt) -> {
-
             jLDeletedIndicatorItem.setVisible(false);
-
         };
         new Timer(delay, taskPerformer).start();
-
     }
-
     public ArrayList<ItemData> getItem() {
         return Item;
     }
-
     public void setItem(ArrayList<ItemData> item) {
         Item = item;
+        reload();
+    }
+    public void reload (){
+        if(this.isAncestorOf(EditDataForm())) {
+            this.remove(EditDataForm());
+        }else {
+            this.add(EditDataForm(), BorderLayout.CENTER); // add panel
+            this.pack(); // set internal frame to size of contents
+        }
     }
 }

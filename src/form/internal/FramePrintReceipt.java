@@ -30,11 +30,9 @@ public class FramePrintReceipt extends JInternalFrame {
         this.add( ReceiptPrint(), BorderLayout.CENTER ); // add panel
         this.pack(); // set internal frame to size of contents
     }
-    public String LoadReceiptScript()
-    {
+    public String LoadReceiptScript(){
         int count=1;
-        for(ReceiptData me : getReceipt())
-        {
+        for(ReceiptData me : getReceipt()){
             setDatatotext(getDatatotext() + String.format("%3d%50s%12d%12d%12d\n",count,me.getItemName(),me.getItemPrice(),me.getItemQuantity(),me.getItemTotalPrice()));
             count++;
         }
@@ -44,14 +42,11 @@ public class FramePrintReceipt extends JInternalFrame {
                 String.format("========================================================\n\t\t\t%7s%12d\n", "Total :",TotalTotalPrice));
         return getText();
     }
-    public JPanel ReceiptPrint()
-    { JPanel jPReceiptView = new JPanel(new GridLayout(1, 1));
-
+    public JPanel ReceiptPrint(){
+        JPanel jPReceiptView = new JPanel(new GridLayout(1, 1));
         box= Box.createVerticalBox();
-        //jTAAboutScript.append(LoadReceiptScript);
 
         jTAAboutScript= new JTextArea(getText(),18,25);
-
         box.add(new JScrollPane(jTAAboutScript));
         jPReceiptView.add(box);
         JPanel jPBPrint = new JPanel(new FlowLayout(FlowLayout.RIGHT));
@@ -67,34 +62,35 @@ public class FramePrintReceipt extends JInternalFrame {
 
         return jPReceiptPrint;
     }
-
     public ArrayList<ReceiptData> getReceipt() {
         return Receipt;
     }
-
     public void setReceipt(ArrayList<ReceiptData> receipt) {
         Receipt = receipt;
     }
-
     public void update(String text, String datatotext, String aboutScript){
                 this.setText(text);
                 this.setDatatotext(datatotext);
                 jTAAboutScript.setText(aboutScript);
                 jTAAboutScript.append(LoadReceiptScript());
     }
-
+    public void reload(){
+        if(this.isAncestorOf(ReceiptPrint())) {
+            this.remove(ReceiptPrint());
+        }else {
+            this.add(ReceiptPrint(), BorderLayout.CENTER); // add panel
+            this.pack(); // set internal frame to size of contents
+        }
+    }
     public String getDatatotext() {
         return datatotext;
     }
-
     public void setDatatotext(String datatotext) {
         this.datatotext = datatotext;
     }
-
     public String getText() {
         return text;
     }
-
     public void setText(String text) {
         this.text = text;
     }
