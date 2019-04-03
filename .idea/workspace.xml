@@ -1,41 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="cdb932d9-7e58-4d94-93a9-e7b232ef17da" name="Default" comment="">
-      <change afterPath="$PROJECT_DIR$/out/production/Casheer/Screenshot.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/out/production/Casheer/Screenshot1.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/out/production/Casheer/form/internal/FrameItemData$1.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/out/production/Casheer/form/internal/FrameItemData$2.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/out/production/Casheer/form/internal/FrameItemData$3.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/out/production/Casheer/form/internal/FrameTransaction$1.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/out/production/Casheer/form/internal/FrameTransaction$2.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/res/Screenshot.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/res/Screenshot1.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/res/Screenshot2.jpg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Casheer.iml" beforeDir="false" afterPath="$PROJECT_DIR$/Casheer.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Casheer/form/AboutForm.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Casheer/form/AboutForm.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Casheer/form/CasheerForm$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Casheer/form/CasheerForm$1.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Casheer/form/CasheerForm$2.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Casheer/form/CasheerForm$3.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Casheer/form/CasheerForm$4.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Casheer/form/CasheerForm$5.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Casheer/form/CasheerForm$6.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Casheer/form/CasheerForm.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Casheer/form/CasheerForm.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Casheer/form/internal/FrameItemData.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Casheer/form/internal/FrameItemData.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Casheer/form/internal/FrameLogin$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Casheer/form/internal/FrameLogin$1.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Casheer/form/internal/FrameLogin.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Casheer/form/internal/FrameLogin.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Casheer/form/internal/FramePrintReceipt.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Casheer/form/internal/FramePrintReceipt.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Casheer/form/internal/FrameTransaction.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Casheer/form/internal/FrameTransaction.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Casheer/misc/ExcelExport.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Casheer/misc/ExcelExport.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/form/AboutForm.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/form/AboutForm.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/form/CasheerForm.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/form/CasheerForm.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/form/internal/FrameItemData.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/form/internal/FrameItemData.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/form/internal/FrameLogin.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/form/internal/FrameLogin.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/form/internal/FramePrintReceipt.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/form/internal/FramePrintReceipt.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/form/internal/FrameTransaction.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/form/internal/FrameTransaction.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/misc/ExcelExport.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/misc/ExcelExport.java" afterDir="false" />
-    </list>
+    <list default="true" id="cdb932d9-7e58-4d94-93a9-e7b232ef17da" name="Default" comment="" />
     <ignored path="JavaFxApplication.iws" />
     <ignored path=".idea/workspace.xml" />
     <ignored path="$PROJECT_DIR$/out/" />
@@ -97,11 +63,10 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/form/CasheerForm.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-2231">
+            <state relative-caret-position="1932">
               <caret line="86" column="39" selection-start-line="86" selection-start-column="39" selection-end-line="86" selection-end-column="39" />
               <folding>
-                <element signature="e#68197#68198#0" expanded="true" />
-                <element signature="e#68254#68255#0" expanded="true" />
+                <element signature="imports" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -347,12 +312,12 @@
       <updated>1359379246138</updated>
       <workItem from="1359379250712" duration="1302000" />
       <workItem from="1554254072698" duration="1196000" />
-      <workItem from="1554267093488" duration="21036000" />
+      <workItem from="1554267093488" duration="21454000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="23534000" />
+    <option name="totallyTimeSpent" value="23952000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1382" height="784" extended-state="6" />
@@ -462,26 +427,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/form/internal/FrameItemData.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="5313">
-          <caret line="233" selection-start-line="233" selection-end-line="233" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/form/internal/FramePrintReceipt.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1334">
-          <caret line="16" column="43" selection-start-line="16" selection-start-column="43" selection-end-line="16" selection-end-column="43" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/form/AboutForm.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-630">
@@ -525,16 +470,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/form/internal/FrameTransaction.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-3781">
-          <caret line="230" column="36" selection-start-line="230" selection-start-column="36" selection-end-line="230" selection-end-column="36" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/misc/CellSpinner.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1532">
@@ -544,12 +479,10 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/form/CasheerForm.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-2231">
+        <state relative-caret-position="1932">
           <caret line="86" column="39" selection-start-line="86" selection-start-column="39" selection-end-line="86" selection-end-column="39" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#1683#2052#0" expanded="true" />
-            <element signature="e#2051#2052#0" expanded="true" />
           </folding>
         </state>
       </provider>
