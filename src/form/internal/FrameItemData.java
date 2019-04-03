@@ -2,7 +2,6 @@ package form.internal;
 
 import misc.ExcelExport;
 import model.ItemData;
-
 import javax.swing.*;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;

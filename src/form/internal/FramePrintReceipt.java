@@ -1,7 +1,6 @@
 package form.internal;
 
 import model.ReceiptData;
-
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;

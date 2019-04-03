@@ -1,7 +1,6 @@
 package form.internal;
 
 import model.UserData;
-
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -57,7 +56,8 @@ public class FrameLogin extends JInternalFrame  {
         JPanel jPLogin = new JPanel(new FlowLayout(FlowLayout.RIGHT));
         jBLogin = new JButton("Login");
         jBLogin.addActionListener((ActionEvent e) -> {
-            if(jTFName.getText().equals("")&&jPFPass.getText().equals("")){
+            String pass = String.valueOf(jPFPass.getPassword());
+            if(jTFName.getText().equals("")&&pass.equals("")){
                 String string = String.format("Username and password cannot empty");
                 JOptionPane.showMessageDialog(null,string,"",JOptionPane.INFORMATION_MESSAGE);
             }else if(jTFName.getText().equals("")){
@@ -69,12 +69,12 @@ public class FrameLogin extends JInternalFrame  {
             }else if (jTFName.getText().contains(" ")){
                 String string = String.format("Username must not contain space");
                 JOptionPane.showMessageDialog(null,string,"",JOptionPane.INFORMATION_MESSAGE);
-            }else if(jPFPass.getText().equals("")){
+            }else if(pass.equals("")){
                 String string = String.format("Password cannot empty");
                 JOptionPane.showMessageDialog(null,string,"",JOptionPane.INFORMATION_MESSAGE);
             }else{
                 for(UserData target : getUser()){
-                    if(jTFName.getText().equals(target.getUsername())&&jPFPass.getText().equals(target.getPassword())){
+                    if(jTFName.getText().equals(target.getUsername())&&pass.equals(target.getPassword())){
                         Login = true;
                         break;
                     }else{
