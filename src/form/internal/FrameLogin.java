@@ -9,7 +9,7 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 
-public class FrameLogin extends JInternalFrame {
+public class FrameLogin extends JInternalFrame  {
     private JTextField jTFName;
     private JPasswordField jPFPass;
     private JButton jBLogin;
@@ -105,6 +105,9 @@ public class FrameLogin extends JInternalFrame {
                     String string = String.format("Username and password are incorrect");
                     JOptionPane.showMessageDialog(null,string,"",JOptionPane.INFORMATION_MESSAGE);
                 }
+                if(isLogin()) {
+                    doWhenSuccess();
+                }
             }
         });
         jPLogin.add(jBLogin);
@@ -122,5 +125,21 @@ public class FrameLogin extends JInternalFrame {
 
     public boolean isLogin() {
         return Login;
+    }
+    public JButton getLoginButton(){
+        return jBLogin;
+    }
+     public void clearPasswordField(){
+        jPFPass.setText("");
+     }
+     public void clearUsernameField(){
+        jTFName.setText("");
+     }
+     public void clearField(){
+        clearPasswordField();
+        clearUsernameField();
+     }
+     public void doWhenSuccess(){
+
     }
 }
