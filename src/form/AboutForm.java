@@ -17,8 +17,7 @@ import javax.swing.JTextArea;
 public class AboutForm {
     private JTextArea jTAAboutScript;
     private Box box;  
-    public  AboutForm()
-    {
+    public  AboutForm(){
      box = Box.createHorizontalBox();
      String script = 
  " Copyright (c) 2014, 2016 Augustine Sena,Inc (アウグスティヌスセナ、株式会社) \n"+
@@ -52,9 +51,8 @@ public class AboutForm {
  " ==================================(311410001)===================================\n\n";
                 jTAAboutScript = new JTextArea(script, 15, 25);
                 box.add( new JScrollPane( jTAAboutScript ) );
-              
-                JOptionPane.showMessageDialog(null,box,"About",JOptionPane.PLAIN_MESSAGE);
-                
-
+    }
+    public void show(){
+        JOptionPane.showMessageDialog(null,box,"About",JOptionPane.PLAIN_MESSAGE);
     }
 }
