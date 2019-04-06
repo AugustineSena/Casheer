@@ -20,10 +20,8 @@ public class FrameLogin extends JInternalFrame  {
         this.pack();
     }
     public FrameLogin(ArrayList<UserData> User){
-        super("Login", false, true, false, true );
+        this();
         setUser(User);
-        this.add( MiniForm(), BorderLayout.CENTER ); // add panel
-        this.pack();
     }
 
     private JPanel MiniForm(){

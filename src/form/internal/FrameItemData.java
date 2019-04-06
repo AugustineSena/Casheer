@@ -1,20 +1,17 @@
 package form.internal;
 
 import misc.ExcelExport;
+import misc.NumberRenderer;
 import model.ItemData;
 import javax.swing.*;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
-import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableModel;
-import javax.swing.table.TableRowSorter;
-import javax.swing.text.NumberFormatter;
+import javax.swing.table.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.IOException;
-import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.Iterator;
 
@@ -32,10 +29,9 @@ public class FrameItemData extends JInternalFrame {
     private ArrayList <ItemData> Item = new ArrayList<>();
     public FrameItemData(){
         super("Item Data", true, true, true, true );
-        reload();
     }
     public FrameItemData(ArrayList<ItemData> Item){
-        super("Item Data", true, true, true, true );
+        this();
         setItem(Item);
         reload();
     }
@@ -73,6 +69,8 @@ public class FrameItemData extends JInternalFrame {
                 return false;
             }
         };
+        TableColumnModel m = jTEditDataForm.getColumnModel();
+        m.getColumn(2).setCellRenderer(NumberRenderer.getCurrencyRenderer());
         jTEditDataForm.setPreferredScrollableViewportSize(new Dimension(450,123));
         jTEditDataForm.setFillsViewportHeight(true);
         JScrollPane scroll = new JScrollPane(jTEditDataForm);
@@ -100,16 +98,7 @@ public class FrameItemData extends JInternalFrame {
         JLabel jLItemName = new JLabel("Item Name :");
         jTFItemName = new JTextField(12);
         JLabel jLItemPrice = new JLabel("Item Price :");
-
-        NumberFormat format = NumberFormat.getInstance();
-        NumberFormatter formatter = new NumberFormatter(format);
-        formatter.setValueClass(Integer.class);
-        formatter.setMinimum(null);//?
-        formatter.setMaximum(Integer.MAX_VALUE);
-        formatter.setAllowsInvalid(false);
-        // If you want the value to be committed on each keystroke instead of focus lost
-        formatter.setCommitsOnValidEdit(true);
-        JFormattedTextField jTFItemPrice = new JFormattedTextField(formatter);//http://bugs.java.com/bugdatabase/view_bug.do?bug_id=4832257
+        JFormattedTextField jTFItemPrice = new JFormattedTextField(NumberRenderer.getCurrencyFormatter());//http://bugs.java.com/bugdatabase/view_bug.do?bug_id=4832257
         jTFItemPrice.setColumns(12);
         JButton jBAddData = new JButton("Add");
         jBAddData.addActionListener((ActionEvent e) -> {

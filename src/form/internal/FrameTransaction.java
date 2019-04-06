@@ -2,6 +2,7 @@ package form.internal;
 
 import misc.CellSpinner;
 import misc.ExcelExport;
+import misc.NumberRenderer;
 import model.ItemData;
 import model.ReceiptData;
 import javax.swing.*;
@@ -22,7 +23,7 @@ public class FrameTransaction extends JInternalFrame {
     private FramePrintReceipt framePrintReceipt = new FramePrintReceipt();
     private JTable jTTransactionForm;
     private Object[][] dataTransactionForm ;
-    private JTextField jTFTotalTotalPrice;
+    private JFormattedTextField jTFTotalTotalPrice;
     private TableRowSorter<TableModel> rowSorterTransactionForm;
     private DefaultTableModel modelDataTransaction;
     ////////////////////////////////////////DataTransactionEdit////////////////////////////////////////
@@ -40,17 +41,12 @@ public class FrameTransaction extends JInternalFrame {
         this.pack(); // set internal frame to size of contents
     }
     public FrameTransaction(JDesktopPane parentDesktop){
-        super("Transaction", true, true, true, true );
+        this();
         this.setParentDesktop(parentDesktop);
-        this.add( TransactionForm(), BorderLayout.CENTER ); // add panel
-        this.pack(); // set internal frame to size of contents
     }
     public FrameTransaction(JDesktopPane parentDesktop , ArrayList<ItemData> Item){
-        super("Transaction", true, true, true, true );
-        this.setParentDesktop(parentDesktop);
+        this(parentDesktop);
         this.setItem(Item);
-        this.add( TransactionForm(), BorderLayout.CENTER ); // add panel
-        this.pack(); // set internal frame to size of contents
     }
     private JPanel TransactionForm()
     {
@@ -113,6 +109,8 @@ public class FrameTransaction extends JInternalFrame {
             }
         };
         TableColumnModel tcm = jTTransactionForm.getColumnModel();
+        tcm.getColumn(3).setCellRenderer(NumberRenderer.getCurrencyRenderer());
+        tcm.getColumn(5).setCellRenderer(NumberRenderer.getCurrencyRenderer());
         jTTransactionForm.setRowHeight(30);
         TableColumn tc = tcm.getColumn(4);
         tc.setCellEditor(new CellSpinner());
@@ -173,9 +171,9 @@ public class FrameTransaction extends JInternalFrame {
 
         JPanel jPTotalTotalPrice = new JPanel(new FlowLayout(FlowLayout.RIGHT));
         JLabel jLTotalTotalPrice = new JLabel("Total :");
-        jTFTotalTotalPrice = new JTextField(12);
-        String valueOfTotalTotalPrice = String.valueOf(TotalTotalPrice);
-        jTFTotalTotalPrice.setText(valueOfTotalTotalPrice);
+        jTFTotalTotalPrice = new JFormattedTextField(NumberRenderer.getCurrencyFormatter());
+        jTFTotalTotalPrice.setColumns(12);
+        jTFTotalTotalPrice.setText(String.valueOf(TotalTotalPrice));
         jTFTotalTotalPrice.setEditable(false);
         jTFTotalTotalPrice.setHorizontalAlignment(SwingConstants.RIGHT);
         jPTotalTotalPrice.add(jLTotalTotalPrice);
