@@ -14,7 +14,7 @@ public class ItemData {
     private String ItemName;
     private int ItemPrice;
 
-     ItemData(){
+    public ItemData(){
         //
     }
     public ItemData(int ID, String ItemName, int ItemPrice) {

@@ -17,15 +17,11 @@ public class ReceiptData extends  ItemData{
         super();
     }
     public ReceiptData(int ID, String ItemName, int ItemPrice) {
-        super.setID(ID);
-        super.setItemName(ItemName);
-        super.setItemPrice(ItemPrice);
+        super(ID,ItemName,ItemPrice);
     }
     
     public ReceiptData(int ID, String ItemName, int ItemPrice, int ItemQuantity) {
-        super.setID(ID);
-        super.setItemName(ItemName);
-        super.setItemPrice(ItemPrice);
+        this(ID,ItemName,ItemPrice);
         this.ItemQuantity = ItemQuantity;
         this.ItemTotalPrice =  ItemQuantity*ItemPrice;
     }
